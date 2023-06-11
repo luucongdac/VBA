@@ -1,3 +1,5 @@
+root_pwd = r'D:\02_Git\VBA'
+
 
 import re
 import os
@@ -79,7 +81,7 @@ def crab_testcases():
     global testSuiteName
     global Treatment_test_list
     global Service_test_list
-    a =  open('data.txt', 'r')
+    a =  open(os.path.join(root_pwd,'data.txt'), 'r')
     data = a.readlines()
     content = []
 
@@ -153,7 +155,8 @@ for i in testCases:
 #     None
 
 main_folder = f"test_{testSuiteName}"
-main_folder_path = os.path.join(os.getcwd(), main_folder)
+main_folder_path = os.path.join(root_pwd, main_folder)
+print(os.getcwd())
 if os.path.exists(main_folder_path):
     shutil.rmtree(main_folder_path)
 os.mkdir(main_folder_path)
