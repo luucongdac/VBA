@@ -1,5 +1,6 @@
 root_pwd = r'D:\02_Git\VBA'
 
+root_pwd = r'D:\02_Git\VBA'
 
 import re
 import os
@@ -57,6 +58,55 @@ Service_test_list
 TestCaseName
                         ]
         self.teardown_path = []
+'''
+
+
+Makefile = \
+'''
+#-------------------------------------------------------------------------------
+# Makefile - procedures/thriver/test_archiver
+#
+# Copyright (C) Massachusetts General Hospital (MGH)
+#
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# The target ...
+
+ifneq ($(APP), unittest)
+    override APP = integration
+endif
+
+all: test
+
+#-------------------------------------------------------------------------------
+# Code documentation generation
+
+DOCGEN = sphinx
+
+#-------------------------------------------------------------------------------
+# Common include for APP modules
+
+include $(TCS_MAKEDIR)/make.integration
+
+#-------------------------------------------------------------------------------
+# clean and clobber etc.
+
+CLOBBER += *.pyc      \
+	       *.log      \
+           index.html \
+           xml_report
+
+include $(TCS_MAKEDIR)/make.tidy
+'''
+
+__init__py = \
+'''
+r"""
+File: __init__.py
+===================
+Copyright (c) MGH 2014
+"""
 '''
 
 def convert_to_uppercase(text):
@@ -134,7 +184,7 @@ def crab_testcases():
         i = str(i).replace("\n", "").replace("$", "").replace('[\'{"',"").split('","')
         for j in i:
             print(j)
-            if j[0] == 'H' or j[0] == 'I' or (not re.search('^\w+\d+":""',j) and not re.search('^\w+\d+":"$',j)):
+            if j[0] == 'G' or j[0] == 'H' or j[0] == 'I' or (not re.search('^\w+\d+":""',j) and not re.search('^\w+\d+":"$',j)):
                 temp.append(j)
                 print(j)
         testCases.append(temp)
@@ -206,20 +256,21 @@ for i in testCases:
     TestSteps = ""
     if len(G) == len(H):
         for i in range(0, len(G)):
-            a = ""
-            if ("=" in H[i]):
-                a = "_" + H[i].split("', '")[0].split("=")[1]
-            name_class_inheritance = validate_text(G[i].replace('SETUP_',"")+ validate_text(convert_to_uppercase(a),is_leading_degit=True))
-            print(f"====[name_class_inheritance]====> {name_class_inheritance}")
-            if name_class_inheritance not in class_inherritance:
-                class_inherritance.append(name_class_inheritance)
-                if( not "=" in H[i]):
-                    ClassInherritance += 'class AA(BB): pass\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
-                else:
-                    ClassInherritance += 'class AA(BB):\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
-                    for a in H[i].replace("', '","").replace(r'\t',"").split(r'\n'):
-                        ClassInherritance += f'    {a}\n'
-            TestSteps += f"                        {name_class_inheritance},\n"
+            if(G[i] != ""):
+                a = ""
+                if ("=" in H[i]):
+                    a = "_" + H[i].split("', '")[0].split("=")[1]
+                name_class_inheritance = validate_text(G[i].replace('SETUP_',"")+ validate_text(convert_to_uppercase(a),is_leading_degit=True))
+                print(f"====[name_class_inheritance]====> {name_class_inheritance}")
+                if name_class_inheritance not in class_inherritance:
+                    class_inherritance.append(name_class_inheritance)
+                    if( not "=" in H[i]):
+                        ClassInherritance += 'class AA(BB): pass\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
+                    else:
+                        ClassInherritance += 'class AA(BB):\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
+                        for a in H[i].replace("', '","").replace(r'\t',"").split(r'\n'):
+                            ClassInherritance += f'    {a}\n'
+                TestSteps += f"                        {name_class_inheritance},\n"
     content = content.replace("ClassInherritance", f"{ClassInherritance}")
     content = content.replace("TestSteps", f"{TestSteps}")
     
@@ -259,7 +310,15 @@ with open(b_file_path, "w", newline='\n') as f:
     f.write(content)
     pass
 
-
-
-
-
+with open(os.path.join(main_folder_path, "Makefile"), "w", newline='\n') as f:
+    f.write(Makefile)
+    pass
+with open(os.path.join(main_folder_path, "__init__.py"), "w", newline='\n') as f:
+    f.write(__init__py)
+    pass
+with open(os.path.join(sub_folder_path, "__init__.py"), "w", newline='\n') as f:
+    f.write(__init__py)
+    pass
+#forever loop
+while(True):
+    None
