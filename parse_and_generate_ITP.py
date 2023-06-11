@@ -40,11 +40,16 @@ TestCaseInport
 class test_TestSuiteName(ClinicalIntegrationTestProcedure):
     def __init__(self, test):
         name = "test_TestSuiteName"
-        Treatment_test_list
-        Service_test_list
+        
+        treatment_test_list = [
+Treatment_test_list
+                            ]
+        service_test_list = [
+Service_test_list
+                            ]
         info_exchange = [
                         ]
-        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange, treatment_test_list=treatment_test_list)
+        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange, List_register_v_file)
         self.applicable_rooms = ['mcr']
         self.setup =    [  
 TestCaseName
@@ -52,17 +57,28 @@ TestCaseName
         self.teardown_path = []
 '''
 
-def validate_text(text):
-    text = str(text)
+def convert_to_uppercase(text):
+    text = str(text).replace(r"\LF", "").replace(r"\n", "").replace(r" ", "_").replace(r".", "_").replace(r",", "_").replace(r":", "_").replace(r"\t", "_")
+    text = text.replace(r"'", "_").replace(r'"', "_")
+    uppercase_text = text.upper()
+    return uppercase_text
+
+def validate_text(text, is_leading_degit=False):
+    text = str(text).replace(r"\LF", "")
     text = re.sub(r'[^a-zA-Z0-9_]', '', text)
     text = text.replace(' ', '').replace(r'\t', '').replace('	',"")
-    if text and text[0].isdigit():
+    if not is_leading_degit and text and text[0].isdigit():
         text = text[1:]
     return text
 
 testSuiteName = ''
+Treatment_test_list = ''
+Service_test_list = ''
+
 def crab_testcases():
     global testSuiteName
+    global Treatment_test_list
+    global Service_test_list
     a =  open('data.txt', 'r')
     data = a.readlines()
     content = []
@@ -71,6 +87,24 @@ def crab_testcases():
     for i in data:
         if 'TestSuite Name' in i:
             testSuiteName = validate_text(i.split('"$C$29":"')[1].split('"')[0]).replace('py','')
+        elif 'Treatment test list' in i:
+            print(i)
+            a = i.split('","')
+            for b in a:
+                if('$C$30":"' in b):
+                    c = b.replace('$C$30":"','').replace(" ","").split(',')
+                    for d in c:
+                        if(d != ""):
+                            Treatment_test_list += f'                            "{d}",\n'
+        elif 'Service test list:' in i:
+            print(i)
+            a = i.split('","')
+            for b in a:
+                if('$C$31":"' in b):
+                    c = b.replace('$C$31":"','').replace(" ","").split(',')
+                    for d in c:
+                        if(d != ""):
+                            Service_test_list += f'                            "{d}",\n'                        
         if 'Test No.' in i:
             enable = True
             continue
@@ -97,13 +131,16 @@ def crab_testcases():
         temp = []
         i = str(i).replace("\n", "").replace("$", "").replace('[\'{"',"").split('","')
         for j in i:
-            if not re.search('^\w+\d+":""',j) and not re.search('^\w+\d+":"$',j):
+            print(j)
+            if j[0] == 'H' or j[0] == 'I' or (not re.search('^\w+\d+":""',j) and not re.search('^\w+\d+":"$',j)):
                 temp.append(j)
+                print(j)
         testCases.append(temp)
         temp = []
     return testCases    
 
 testCases = crab_testcases()
+
 count = 0
 for i in testCases:
     count += 1
@@ -133,6 +170,7 @@ for i in testCases:
     print("======================> ")
     G = []
     H = []
+    class_inherritance = []
     file_import = []
     for j in i:
         if j[0] == 'A':
@@ -157,20 +195,28 @@ for i in testCases:
     content = content.replace("TestCaseDescription", f'name = "{testCaseNameDescription}"')
     ClassImport = ""
     for i in file_import:
-        ClassImport += f"from procedures.thriver.test_itp_mcrhci.SETUP.nameTestCase import *\n".replace('nameTestCase',i.replace(".py",""))
+        if(i != ""):
+            ClassImport += f"from procedures.thriver.test_itp_mcrhci.SETUP.nameTestCase import *\n".replace('nameTestCase',i.replace(".py",""))
     content = content.replace("ClassImport", f"{ClassImport}")
 
     ClassInherritance = ""
     TestSteps = ""
     if len(G) == len(H):
         for i in range(0, len(G)):
-            if( not "=" in H[i]):
-                ClassInherritance += 'class AA(BB): pass\n'.replace("AA",G[i].replace('SETUP_',"")).replace("BB",G[i]) 
-            else:
-                ClassInherritance += 'class AA(BB):\n'.replace("AA",G[i].replace('SETUP_',"")).replace("BB",G[i]) 
-                for a in H[i].replace("', '","").replace(r'\t',"").split(r'\n'):
-                    ClassInherritance += f'    {a}\n'
-            TestSteps += f"                        {G[i]},\n".replace('SETUP_',"")
+            a = ""
+            if ("=" in H[i]):
+                a = "_" + H[i].split("', '")[0].split("=")[1]
+            name_class_inheritance = validate_text(G[i].replace('SETUP_',"")+ validate_text(convert_to_uppercase(a),is_leading_degit=True))
+            print(f"====[name_class_inheritance]====> {name_class_inheritance}")
+            if name_class_inheritance not in class_inherritance:
+                class_inherritance.append(name_class_inheritance)
+                if( not "=" in H[i]):
+                    ClassInherritance += 'class AA(BB): pass\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
+                else:
+                    ClassInherritance += 'class AA(BB):\n'.replace("AA",name_class_inheritance).replace("BB",G[i]) 
+                    for a in H[i].replace("', '","").replace(r'\t',"").split(r'\n'):
+                        ClassInherritance += f'    {a}\n'
+            TestSteps += f"                        {name_class_inheritance},\n"
     content = content.replace("ClassInherritance", f"{ClassInherritance}")
     content = content.replace("TestSteps", f"{TestSteps}")
     
@@ -197,6 +243,15 @@ for i in test_case_file_created:
 content = content.replace('TestCaseName',f"{TestCaseName}")  
 content = content.replace('TestCaseInport',f"{TestCaseInport}")    
 
+if(Treatment_test_list != ""):
+    content = content.replace('Service_test_list',"")   
+    content = content.replace('Treatment_test_list',f"{Treatment_test_list}")  
+    content = content.replace('List_register_v_file',"treatment_test_list=treatment_test_list")   
+else:
+    content = content.replace('Treatment_test_list',"")  
+    content = content.replace('Service_test_list',f"{Service_test_list}")   
+    content = content.replace('List_register_v_file',"service_test_list=service_test_list")   
+    
 with open(b_file_path, "w", newline='\n') as f:
     f.write(content)
     pass

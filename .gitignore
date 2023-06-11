@@ -1,3 +1,5 @@
 *.txt
-
+data.txt
 test_*/
+
+#git config core.autocrlf false
