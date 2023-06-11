@@ -1,0 +1,680 @@
+
+"""
+File:
+======================================
+
+This module implements set up path for mcrtrmgr test
+
+Copyright (c) MGH 2023
+
+Test for setup ClinicalIntegrationTestProcedure
+
+"""
+
+from thriver import *
+from thriver.tcs_interface import *
+from thriver.infoset import *
+from thriver.infoset.tcsobject import *
+from thriver.database.db_stub import *
+
+
+class SETUP_VALIDATE_OPEN_BEAM_TUNING(ClinicalIntegrationTestProcedure):
+	name = 'Validate beam tuning screen'
+	# Color Id
+	green = "13"
+	grey = "65"
+	yellow = "12"
+	black = "0"
+	visible = "1"
+	notVisible = "0"
+
+	# expected default values
+	bts_beam_tuning_block_id_value_default_expected = 0
+	bts_beam_tuning_beamtuner_status_idle_foreground_default_expected = green
+	bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected = grey
+	bts_beam_tuning_beamtuner_status_ready_foreground_default_expected = grey
+	bts_beam_tuning_beamtuner_status_cont_foreground_default_expected = grey
+	bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected = grey
+	bts_beam_tuning_block_status_unknown_foreground_default_expected = green
+	bts_beam_tuning_block_status_uninitialized_foreground_default_expected = grey
+	bts_beam_tuning_block_status_idle_foreground_default_expected = grey
+	bts_beam_tuning_block_status_prepare_foreground_default_expected = grey
+	bts_beam_tuning_block_status_waitacq_foreground_default_expected = grey
+	bts_beam_tuning_block_status_tuningwait_foreground_default_expected = grey
+	bts_beam_tuning_block_status_checking_foreground_default_expected = grey
+	bts_beam_tuning_block_status_finishedacq_foreground_default_expected = grey
+	bts_beam_tuning_block_status_cancel_foreground_default_expected = grey
+	bts_beam_tuning_block_status_tuned_foreground_default_expected = grey
+	bts_beam_tuning_block_status_nottuned_foreground_default_expected = grey
+	bts_beam_tuning_nbr_tuning_loop_value_default_expected = 0
+	bts_beam_tuning_nbr_acquisition_value_default_expected = 0
+	bts_beam_tuning_centroid_x_value_default_expected = 0
+	bts_beam_tuning_sigma_x_value_default_expected = 0
+	bts_beam_tuning_centroid_y_value_default_expected = 0
+	bts_beam_tuning_sigma_y_value_default_expected = 0
+	bts_beam_tuning_msg_loopfailedlbl_visible_default_expected = notVisible
+	bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected = notVisible
+	bts_beam_tuning_start_led_foreground_default_expected = yellow
+	bts_beam_tuning_stop_led_foreground_default_expected = black
+	bts_beam_tuning_reset_led_foreground_default_expected = yellow
+	bts_beam_tuning_bypass_led_foreground_default_expected = black
+	bts_beam_tuning_redo_led_foreground_default_expected = black
+	bts_beam_tuning_manualacquisition_led_foreground_default_expected = black
+
+	# visibility expected
+	bts_beam_tuning_tuning_block_id_visible_expected = visible
+	bts_beam_tuning_beamtuner_status_idle_visible_expected = visible
+	bts_beam_tuning_beamtuner_status_tuning_visible_expected = visible
+	bts_beam_tuning_beamtuner_status_ready_visible_expected = visible
+	bts_beam_tuning_beamtuner_status_cont_visible_expected = visible
+	bts_beam_tuning_beamtuner_status_manacq_visible_expected = visible
+	bts_beam_tuning_centroid_x_visible_expected = visible
+	bts_beam_tuning_sigma_x_visible_expected = visible
+	bts_beam_tuning_centroid_y_visible_expected = visible
+	bts_beam_tuning_sigma_y_visible_expected = visible
+	bts_beam_tuning_nbr_tuning_loop_visible_expected = visible
+	bts_beam_tuning_nbr_acquisition_visible_expected = visible
+	bts_beam_tuning_block_status_unknown_visible_expected = visible
+	bts_beam_tuning_block_status_uninitialized_visible_expected = visible
+	bts_beam_tuning_block_status_idle_visible_expected = visible
+	bts_beam_tuning_block_status_prepare_visible_expected = visible
+	bts_beam_tuning_block_status_waitacq_visible_expected = visible
+	bts_beam_tuning_block_status_tuningwait_visible_expected = visible
+	bts_beam_tuning_block_status_checking_visible_expected = visible
+	bts_beam_tuning_block_status_finishedacq_visible_expected = visible
+	bts_beam_tuning_block_status_cancel_visible_expected = visible
+	bts_beam_tuning_block_status_tuned_visible_expected = visible
+	bts_beam_tuning_block_status_nottuned_visible_expected = visible
+	bts_beam_tuning_bypass_led_visible_expected = visible
+	bts_beam_tuning_redo_led_visible_expected = visible
+	bts_beam_tuning_start_led_visible_expected = visible
+	bts_beam_tuning_reset_led_visible_expected = visible
+	bts_beam_tuning_stop_led_visible_expected = visible
+	bts_beam_tuning_manualacquisition_led_visible_expected = visible
+	bts_beam_tuning_bypassbtn_visible_expected = visible
+	bts_beam_tuning_redobtn_visible_expected = visible
+	bts_beam_tuning_startbtn_visible_expected = visible
+	bts_beam_tuning_resetbtn_visible_expected = visible
+	bts_beam_tuning_stopbtn_visible_expected = visible
+	bts_beam_tuning_manualacquisitionbtn_visible_expected = visible
+	bts_beam_tuning_stopmanualbtn_visible_expected = visible
+	bts_beam_tuning_cancelbtn_visible_expected = visible
+	
+	def __init__(self, test):
+		cls = type(self)
+		# Modify data from parents class purpose
+		name = cls.name 
+		bts_beam_tuning_block_id_value_default_expected = cls.bts_beam_tuning_block_id_value_default_expected
+		bts_beam_tuning_beamtuner_status_idle_foreground_default_expected = cls.bts_beam_tuning_beamtuner_status_idle_foreground_default_expected
+		bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected = cls.bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected
+		bts_beam_tuning_beamtuner_status_ready_foreground_default_expected = cls.bts_beam_tuning_beamtuner_status_ready_foreground_default_expected
+		bts_beam_tuning_beamtuner_status_cont_foreground_default_expected = cls.bts_beam_tuning_beamtuner_status_cont_foreground_default_expected
+		bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected = cls.bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected
+		bts_beam_tuning_block_status_unknown_foreground_default_expected = cls.bts_beam_tuning_block_status_unknown_foreground_default_expected
+		bts_beam_tuning_block_status_uninitialized_foreground_default_expected = cls.bts_beam_tuning_block_status_uninitialized_foreground_default_expected
+		bts_beam_tuning_block_status_idle_foreground_default_expected = cls.bts_beam_tuning_block_status_idle_foreground_default_expected
+		bts_beam_tuning_block_status_prepare_foreground_default_expected = cls.bts_beam_tuning_block_status_prepare_foreground_default_expected
+		bts_beam_tuning_block_status_waitacq_foreground_default_expected = cls.bts_beam_tuning_block_status_waitacq_foreground_default_expected
+		bts_beam_tuning_block_status_tuningwait_foreground_default_expected = cls.bts_beam_tuning_block_status_tuningwait_foreground_default_expected
+		bts_beam_tuning_block_status_checking_foreground_default_expected = cls.bts_beam_tuning_block_status_checking_foreground_default_expected
+		bts_beam_tuning_block_status_finishedacq_foreground_default_expected = cls.bts_beam_tuning_block_status_finishedacq_foreground_default_expected
+		bts_beam_tuning_block_status_cancel_foreground_default_expected = cls.bts_beam_tuning_block_status_cancel_foreground_default_expected
+		bts_beam_tuning_block_status_tuned_foreground_default_expected = cls.bts_beam_tuning_block_status_tuned_foreground_default_expected
+		bts_beam_tuning_block_status_nottuned_foreground_default_expected = cls.bts_beam_tuning_block_status_nottuned_foreground_default_expected
+		bts_beam_tuning_nbr_tuning_loop_value_default_expected = cls.bts_beam_tuning_nbr_tuning_loop_value_default_expected	
+		bts_beam_tuning_nbr_acquisition_value_default_expected = cls.bts_beam_tuning_nbr_acquisition_value_default_expected
+		bts_beam_tuning_centroid_x_value_default_expected = cls.bts_beam_tuning_centroid_x_value_default_expected
+		bts_beam_tuning_sigma_x_value_default_expected = cls.bts_beam_tuning_sigma_x_value_default_expected
+		bts_beam_tuning_centroid_y_value_default_expected = cls.bts_beam_tuning_centroid_y_value_default_expected
+		bts_beam_tuning_sigma_y_value_default_expected = cls.bts_beam_tuning_sigma_y_value_default_expected
+		bts_beam_tuning_msg_loopfailedlbl_visible_default_expected = cls.bts_beam_tuning_msg_loopfailedlbl_visible_default_expected
+		bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected = cls.bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected
+		bts_beam_tuning_start_led_foreground_default_expected = cls.bts_beam_tuning_start_led_foreground_default_expected
+		bts_beam_tuning_stop_led_foreground_default_expected = cls.bts_beam_tuning_stop_led_foreground_default_expected
+		bts_beam_tuning_reset_led_foreground_default_expected = cls.bts_beam_tuning_reset_led_foreground_default_expected
+		bts_beam_tuning_bypass_led_foreground_default_expected = cls.bts_beam_tuning_bypass_led_foreground_default_expected
+		bts_beam_tuning_redo_led_foreground_default_expected = cls.bts_beam_tuning_redo_led_foreground_default_expected
+		bts_beam_tuning_manualacquisition_led_foreground_default_expected = cls.bts_beam_tuning_manualacquisition_led_foreground_default_expected
+
+		bts_beam_tuning_tuning_block_id_visible_expected = cls.bts_beam_tuning_tuning_block_id_visible_expected
+		bts_beam_tuning_beamtuner_status_idle_visible_expected = cls.bts_beam_tuning_beamtuner_status_idle_visible_expected
+		bts_beam_tuning_beamtuner_status_tuning_visible_expected = cls.bts_beam_tuning_beamtuner_status_tuning_visible_expected
+		bts_beam_tuning_beamtuner_status_ready_visible_expected = cls.bts_beam_tuning_beamtuner_status_ready_visible_expected
+		bts_beam_tuning_beamtuner_status_cont_visible_expected = cls.bts_beam_tuning_beamtuner_status_cont_visible_expected
+		bts_beam_tuning_beamtuner_status_manacq_visible_expected = cls.bts_beam_tuning_beamtuner_status_manacq_visible_expected
+		bts_beam_tuning_centroid_x_visible_expected = cls.bts_beam_tuning_centroid_x_visible_expected
+		bts_beam_tuning_sigma_x_visible_expected = cls.bts_beam_tuning_sigma_x_visible_expected
+		bts_beam_tuning_centroid_y_visible_expected = cls.bts_beam_tuning_centroid_y_visible_expected
+		bts_beam_tuning_sigma_y_visible_expected = cls.bts_beam_tuning_sigma_y_visible_expected
+		bts_beam_tuning_nbr_tuning_loop_visible_expected = cls.bts_beam_tuning_nbr_tuning_loop_visible_expected
+		bts_beam_tuning_nbr_acquisition_visible_expected = cls.bts_beam_tuning_nbr_acquisition_visible_expected
+		bts_beam_tuning_block_status_unknown_visible_expected = cls.bts_beam_tuning_block_status_unknown_visible_expected
+		bts_beam_tuning_block_status_uninitialized_visible_expected = cls.bts_beam_tuning_block_status_uninitialized_visible_expected
+		bts_beam_tuning_block_status_idle_visible_expected = cls.bts_beam_tuning_block_status_idle_visible_expected
+		bts_beam_tuning_block_status_prepare_visible_expected = cls.bts_beam_tuning_block_status_prepare_visible_expected
+		bts_beam_tuning_block_status_waitacq_visible_expected = cls.bts_beam_tuning_block_status_waitacq_visible_expected
+		bts_beam_tuning_block_status_tuningwait_visible_expected = cls.bts_beam_tuning_block_status_tuningwait_visible_expected
+		bts_beam_tuning_block_status_checking_visible_expected = cls.bts_beam_tuning_block_status_checking_visible_expected
+		bts_beam_tuning_block_status_finishedacq_visible_expected = cls.bts_beam_tuning_block_status_finishedacq_visible_expected
+		bts_beam_tuning_block_status_cancel_visible_expected = cls.bts_beam_tuning_block_status_cancel_visible_expected
+		bts_beam_tuning_block_status_tuned_visible_expected = cls.bts_beam_tuning_block_status_tuned_visible_expected
+		bts_beam_tuning_block_status_nottuned_visible_expected = cls.bts_beam_tuning_block_status_nottuned_visible_expected
+		bts_beam_tuning_bypass_led_visible_expected = cls.bts_beam_tuning_bypass_led_visible_expected
+		bts_beam_tuning_redo_led_visible_expected = cls.bts_beam_tuning_redo_led_visible_expected
+		bts_beam_tuning_start_led_visible_expected = cls.bts_beam_tuning_start_led_visible_expected
+		bts_beam_tuning_reset_led_visible_expected = cls.bts_beam_tuning_reset_led_visible_expected
+		bts_beam_tuning_stop_led_visible_expected = cls.bts_beam_tuning_stop_led_visible_expected
+		bts_beam_tuning_manualacquisition_led_visible_expected = cls.bts_beam_tuning_manualacquisition_led_visible_expected
+		bts_beam_tuning_bypassbtn_visible_expected = cls.bts_beam_tuning_bypassbtn_visible_expected
+		bts_beam_tuning_redobtn_visible_expected = cls.bts_beam_tuning_redobtn_visible_expected
+		bts_beam_tuning_startbtn_visible_expected = cls.bts_beam_tuning_startbtn_visible_expected
+		bts_beam_tuning_resetbtn_visible_expected = cls.bts_beam_tuning_resetbtn_visible_expected
+		bts_beam_tuning_stopbtn_visible_expected = cls.bts_beam_tuning_stopbtn_visible_expected
+		bts_beam_tuning_manualacquisitionbtn_visible_expected = cls.bts_beam_tuning_manualacquisitionbtn_visible_expected
+		bts_beam_tuning_stopmanualbtn_visible_expected = cls.bts_beam_tuning_stopmanualbtn_visible_expected
+		bts_beam_tuning_cancelbtn_visible_expected = cls.bts_beam_tuning_cancelbtn_visible_expected
+
+		# get values
+		get_bts_beam_tuning_tuning_block_id_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_tuning_block_id")
+		get_bts_beam_tuning_beamtuner_status_idle_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_beamtuner_status_idle")
+		get_bts_beam_tuning_beamtuner_status_tuning_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_beamtuner_status_tuning")
+		get_bts_beam_tuning_beamtuner_status_ready_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_beamtuner_status_ready")
+		get_bts_beam_tuning_beamtuner_status_cont_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_beamtuner_status_cont")
+		get_bts_beam_tuning_beamtuner_status_manacq_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_beamtuner_status_manacq")
+		get_bts_beam_tuning_block_status_unknown_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_unknown")
+		get_bts_beam_tuning_block_status_uninitialized_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_uninitialized")
+		get_bts_beam_tuning_block_status_idle_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_idle")
+		get_bts_beam_tuning_block_status_prepare_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_prepare")
+		get_bts_beam_tuning_block_status_waitacq_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_waitacq")
+		get_bts_beam_tuning_block_status_tuningwait_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_tuningwait")
+		get_bts_beam_tuning_block_status_checking_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_checking")
+		get_bts_beam_tuning_block_status_finishedacq_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_finishedacq")
+		get_bts_beam_tuning_block_status_cancel_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_cancel")
+		get_bts_beam_tuning_block_status_tuned_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_tuned")
+		get_bts_beam_tuning_block_status_nottuned_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_block_status_nottuned")
+		get_bts_beam_tuning_nbr_tuning_loop_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_nbr_tuning_loop")
+		get_bts_beam_tuning_nbr_acquisition_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_nbr_acquisition")
+		get_bts_beam_tuning_centroid_x_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_centroid_x")
+		get_bts_beam_tuning_sigma_x_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_sigma_x")
+		get_bts_beam_tuning_centroid_y_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_centroid_y")
+		get_bts_beam_tuning_sigma_y_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_sigma_y")
+		get_bts_beam_tuning_msg_loopfailedlbl_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_msg_loopfailedlbl")
+		get_bts_beam_tuning_msg_beamnottunedlbl_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_msg_beamnottunedlbl")
+		get_bts_beam_tuning_start_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_start_led")
+		get_bts_beam_tuning_stop_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_stop_led")
+		get_bts_beam_tuning_reset_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_reset_led")
+		get_bts_beam_tuning_bypass_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_bypass_led")
+		get_bts_beam_tuning_redo_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_redo_led")
+		get_bts_beam_tuning_manualacquisition_led_foreground = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_ATTR, variable_in = "bts_beam_tuning_manualacquisition_led")
+
+		get_bts_beam_tuning_tuning_block_id_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_tuning_block_id")
+		get_bts_beam_tuning_beamtuner_status_idle_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_beamtuner_status_idle")
+		get_bts_beam_tuning_beamtuner_status_tuning_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_beamtuner_status_tuning")
+		get_bts_beam_tuning_beamtuner_status_ready_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_beamtuner_status_ready")
+		get_bts_beam_tuning_beamtuner_status_cont_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_beamtuner_status_cont")
+		get_bts_beam_tuning_beamtuner_status_manacq_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_beamtuner_status_manacq")
+		get_bts_beam_tuning_centroid_x_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_centroid_x")
+		get_bts_beam_tuning_sigma_x_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_sigma_x")
+		get_bts_beam_tuning_centroid_y_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_centroid_y")
+		get_bts_beam_tuning_sigma_y_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_sigma_y")
+		get_bts_beam_tuning_nbr_tuning_loop_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_nbr_tuning_loop")
+		get_bts_beam_tuning_nbr_acquisition_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_nbr_acquisition")
+		get_bts_beam_tuning_block_status_unknown_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_unknown")
+		get_bts_beam_tuning_block_status_uninitialized_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_uninitialized")
+		get_bts_beam_tuning_block_status_idle_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_idle")
+		get_bts_beam_tuning_block_status_prepare_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_prepare")
+		get_bts_beam_tuning_block_status_waitacq_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_waitacq")
+		get_bts_beam_tuning_block_status_tuningwait_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_tuningwait")
+		get_bts_beam_tuning_block_status_checking_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_checking")
+		get_bts_beam_tuning_block_status_finishedacq_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_finishedacq")
+		get_bts_beam_tuning_block_status_cancel_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_cancel")
+		get_bts_beam_tuning_block_status_tuned_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_tuned")
+		get_bts_beam_tuning_block_status_nottuned_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_block_status_nottuned")
+		get_bts_beam_tuning_bypass_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_bypass_led")
+		get_bts_beam_tuning_redo_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_redo_led")
+		get_bts_beam_tuning_start_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_start_led")
+		get_bts_beam_tuning_reset_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_reset_led")
+		get_bts_beam_tuning_stop_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_stop_led")
+		get_bts_beam_tuning_manualacquisition_led_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_manualacquisition_led")
+		get_bts_beam_tuning_bypassbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_bypassbtn")
+		get_bts_beam_tuning_redobtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_redobtn")
+		get_bts_beam_tuning_startbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_startbtn")
+		get_bts_beam_tuning_resetbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_resetbtn")
+		get_bts_beam_tuning_stopbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_stopbtn")
+		get_bts_beam_tuning_manualacquisitionbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_manualacquisitionbtn")
+		get_bts_beam_tuning_stopmanualbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_stopmanualbtn")
+		get_bts_beam_tuning_cancelbtn_visible = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_IS_VISIBLE, variable_in = "bts_beam_tuning_cancelbtn")
+	
+		# validate
+		validate_bts_beam_tuning_block_id_value_default = MsgTypeNumeric("bts_beam_tuning_tuning_block_id:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_block_id_value_default_expected)
+		validate_bts_beam_tuning_beamtuner_status_idle_foreground_default = MsgTypeString("bts_beam_tuning_beamtuner_status_idle:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_beamtuner_status_idle_foreground_default_expected)
+		validate_bts_beam_tuning_beamtuner_status_tuning_foreground_default = MsgTypeString("bts_beam_tuning_beamtuner_status_tuning:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected)
+		validate_bts_beam_tuning_beamtuner_status_ready_foreground_default = MsgTypeString("bts_beam_tuning_beamtuner_status_ready:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_beamtuner_status_ready_foreground_default_expected)
+		validate_bts_beam_tuning_beamtuner_status_cont_foreground_default = MsgTypeString("bts_beam_tuning_beamtuner_status_cont:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_beamtuner_status_cont_foreground_default_expected)
+		validate_bts_beam_tuning_beamtuner_status_manacq_foreground_default = MsgTypeString("bts_beam_tuning_beamtuner_status_manacq:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_unknown_foreground_default = MsgTypeString("bts_beam_tuning_block_status_unknown:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_unknown_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_uninitialized_foreground_default = MsgTypeString("bts_beam_tuning_block_status_uninitialized:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_uninitialized_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_idle_foreground_default = MsgTypeString("bts_beam_tuning_block_status_idle:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_idle_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_prepare_foreground_default = MsgTypeString("bts_beam_tuning_block_status_prepare:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_prepare_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_waitacq_foreground_default = MsgTypeString("bts_beam_tuning_block_status_waitacq:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_waitacq_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_tuningwait_foreground_default = MsgTypeString("bts_beam_tuning_block_status_tuningwait:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_tuningwait_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_checking_foreground_default = MsgTypeString("bts_beam_tuning_block_status_checking:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_checking_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_finishedacq_foreground_default = MsgTypeString("bts_beam_tuning_block_status_finishedacq:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_finishedacq_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_cancel_foreground_default = MsgTypeString("bts_beam_tuning_block_status_cancel:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_cancel_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_tuned_foreground_default = MsgTypeString("bts_beam_tuning_block_status_tuned:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_tuned_foreground_default_expected)
+		validate_bts_beam_tuning_block_status_nottuned_foreground_default = MsgTypeString("bts_beam_tuning_block_status_nottuned:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_block_status_nottuned_foreground_default_expected)
+		validate_bts_beam_tuning_nbr_tuning_loop_value_default = MsgTypeNumeric("bts_beam_tuning_nbr_tuning_loop:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_nbr_tuning_loop_value_default_expected)
+		validate_bts_beam_tuning_nbr_acquisition_value_default = MsgTypeNumeric("bts_beam_tuning_nbr_acquisition:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_nbr_acquisition_value_default_expected)
+		validate_bts_beam_tuning_centroid_x_value_default = MsgTypeNumeric("bts_beam_tuning_centroid_x:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_centroid_x_value_default_expected)
+		validate_bts_beam_tuning_sigma_x_value_default = MsgTypeNumeric("bts_beam_tuning_sigma_x:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_sigma_x_value_default_expected)
+		validate_bts_beam_tuning_centroid_y_value_default = MsgTypeNumeric("bts_beam_tuning_centroid_y:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_centroid_y_value_default_expected)
+		validate_bts_beam_tuning_sigma_y_value_default = MsgTypeNumeric("bts_beam_tuning_sigma_y:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_sigma_y_value_default_expected)
+		validate_bts_beam_tuning_msg_loopfailedlbl_visible_default = MsgTypeString("bts_beam_tuning_msg_loopfailedlbl:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_msg_loopfailedlbl_visible_default_expected)
+		validate_bts_beam_tuning_msg_beamnottunedlbl_visible_default = MsgTypeString("bts_beam_tuning_msg_beamnottunedlbl:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected)
+		validate_bts_beam_tuning_start_led_foreground_default = MsgTypeString("bts_beam_tuning_start_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_start_led_foreground_default_expected)
+		validate_bts_beam_tuning_stop_led_foreground_default = MsgTypeString("bts_beam_tuning_stop_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_stop_led_foreground_default_expected)
+		validate_bts_beam_tuning_reset_led_foreground_default = MsgTypeString("bts_beam_tuning_reset_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_reset_led_foreground_default_expected)
+		validate_bts_beam_tuning_bypass_led_foreground_default = MsgTypeString("bts_beam_tuning_bypass_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_bypass_led_foreground_default_expected)
+		validate_bts_beam_tuning_redo_led_foreground_default = MsgTypeString("bts_beam_tuning_redo_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_redo_led_foreground_default_expected)
+		validate_bts_beam_tuning_manualacquisition_led_foreground_default = MsgTypeString("bts_beam_tuning_manualacquisition_led:TMMI_MCR_OBJECT_GET_ATTR:FOREGROUND_COLOR", value=bts_beam_tuning_manualacquisition_led_foreground_default_expected)
+	
+		validate_bts_beam_tuning_tuning_block_id_visible = MsgTypeString("bts_beam_tuning_tuning_block_id:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_tuning_block_id_visible_expected)
+		validate_bts_beam_tuning_beamtuner_status_idle_visible = MsgTypeString("bts_beam_tuning_beamtuner_status_idle:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_beamtuner_status_idle_visible_expected)
+		validate_bts_beam_tuning_beamtuner_status_tuning_visible = MsgTypeString("bts_beam_tuning_beamtuner_status_tuning:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_beamtuner_status_tuning_visible_expected)
+		validate_bts_beam_tuning_beamtuner_status_ready_visible = MsgTypeString("bts_beam_tuning_beamtuner_status_ready:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_beamtuner_status_ready_visible_expected)
+		validate_bts_beam_tuning_beamtuner_status_cont_visible = MsgTypeString("bts_beam_tuning_beamtuner_status_cont:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_beamtuner_status_cont_visible_expected)
+		validate_bts_beam_tuning_beamtuner_status_manacq_visible = MsgTypeString("bts_beam_tuning_beamtuner_status_manacq:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_beamtuner_status_manacq_visible_expected)
+		validate_bts_beam_tuning_centroid_x_visible = MsgTypeString("bts_beam_tuning_centroid_x:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_centroid_x_visible_expected)
+		validate_bts_beam_tuning_sigma_x_visible = MsgTypeString("bts_beam_tuning_sigma_x:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_sigma_x_visible_expected)
+		validate_bts_beam_tuning_centroid_y_visible = MsgTypeString("bts_beam_tuning_centroid_y:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_centroid_y_visible_expected)
+		validate_bts_beam_tuning_sigma_y_visible = MsgTypeString("bts_beam_tuning_sigma_y:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_sigma_y_visible_expected)
+		validate_bts_beam_tuning_nbr_tuning_loop_visible = MsgTypeString("bts_beam_tuning_nbr_tuning_loop:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_nbr_tuning_loop_visible_expected)
+		validate_bts_beam_tuning_nbr_acquisition_visible = MsgTypeString("bts_beam_tuning_nbr_acquisition:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_nbr_acquisition_visible_expected)
+		validate_bts_beam_tuning_block_status_unknown_visible = MsgTypeString("bts_beam_tuning_block_status_unknown:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_unknown_visible_expected)
+		validate_bts_beam_tuning_block_status_uninitialized_visible = MsgTypeString("bts_beam_tuning_block_status_uninitialized:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_uninitialized_visible_expected)
+		validate_bts_beam_tuning_block_status_idle_visible = MsgTypeString("bts_beam_tuning_block_status_idle:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_idle_visible_expected)
+		validate_bts_beam_tuning_block_status_prepare_visible = MsgTypeString("bts_beam_tuning_block_status_prepare:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_prepare_visible_expected)
+		validate_bts_beam_tuning_block_status_waitacq_visible = MsgTypeString("bts_beam_tuning_block_status_waitacq:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_waitacq_visible_expected)
+		validate_bts_beam_tuning_block_status_tuningwait_visible = MsgTypeString("bts_beam_tuning_block_status_tuningwait:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_tuningwait_visible_expected)
+		validate_bts_beam_tuning_block_status_checking_visible = MsgTypeString("bts_beam_tuning_block_status_checking:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_checking_visible_expected)
+		validate_bts_beam_tuning_block_status_finishedacq_visible = MsgTypeString("bts_beam_tuning_block_status_finishedacq:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_finishedacq_visible_expected)
+		validate_bts_beam_tuning_block_status_cancel_visible = MsgTypeString("bts_beam_tuning_block_status_cancel:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_cancel_visible_expected)
+		validate_bts_beam_tuning_block_status_tuned_visible = MsgTypeString("bts_beam_tuning_block_status_tuned:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_tuned_visible_expected)
+		validate_bts_beam_tuning_block_status_nottuned_visible = MsgTypeString("bts_beam_tuning_block_status_nottuned:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_block_status_nottuned_visible_expected)
+		validate_bts_beam_tuning_bypass_led_visible = MsgTypeString("bts_beam_tuning_bypass_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_bypass_led_visible_expected)
+		validate_bts_beam_tuning_redo_led_visible = MsgTypeString("bts_beam_tuning_redo_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_redo_led_visible_expected)
+		validate_bts_beam_tuning_start_led_visible = MsgTypeString("bts_beam_tuning_start_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_start_led_visible_expected)
+		validate_bts_beam_tuning_reset_led_visible = MsgTypeString("bts_beam_tuning_reset_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_reset_led_visible_expected)
+		validate_bts_beam_tuning_stop_led_visible = MsgTypeString("bts_beam_tuning_stop_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_stop_led_visible_expected)
+		validate_bts_beam_tuning_manualacquisition_led_visible = MsgTypeString("bts_beam_tuning_manualacquisition_led:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_manualacquisition_led_visible_expected)
+		validate_bts_beam_tuning_bypassbtn_visible = MsgTypeString("bts_beam_tuning_bypassbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_bypassbtn_visible_expected)
+		validate_bts_beam_tuning_redobtn_visible = MsgTypeString("bts_beam_tuning_redobtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_redobtn_visible_expected)
+		validate_bts_beam_tuning_startbtn_visible = MsgTypeString("bts_beam_tuning_startbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_startbtn_visible_expected)
+		validate_bts_beam_tuning_resetbtn_visible = MsgTypeString("bts_beam_tuning_resetbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_resetbtn_visible_expected)
+		validate_bts_beam_tuning_stopbtn_visible = MsgTypeString("bts_beam_tuning_stopbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_stopbtn_visible_expected)
+		validate_bts_beam_tuning_manualacquisitionbtn_visible = MsgTypeString("bts_beam_tuning_manualacquisitionbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_manualacquisitionbtn_visible_expected)
+		validate_bts_beam_tuning_stopmanualbtn_visible = MsgTypeString("bts_beam_tuning_stopmanualbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_stopmanualbtn_visible_expected)
+		validate_bts_beam_tuning_cancelbtn_visible = MsgTypeString("bts_beam_tuning_cancelbtn:TMMI_MCR_IS_VISIBLE", value=bts_beam_tuning_cancelbtn_visible_expected)
+
+		info_exchange = [
+						# Beam tuing block Id
+						InformationSet("get_bts_beam_tuning_tuning_block_id_visible", "thriver", "mcrhci", get_bts_beam_tuning_tuning_block_id_visible),
+						InformationSet("validate_bts_beam_tuning_tuning_block_id_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_tuning_block_id_visible),						
+						InformationSet("get_bts_beam_tuning_tuning_block_id_value", "thriver", "mcrhci", get_bts_beam_tuning_tuning_block_id_value),
+						InformationSet("validate_bts_beam_tuning_block_id_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_id_value_default),
+
+						# Beam tuning status
+						InformationSet("get_bts_beam_tuning_beamtuner_status_idle_visible", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_idle_visible), # "Idle"
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_idle_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_idle_visible),                        
+						InformationSet("get_bts_beam_tuning_beamtuner_status_idle_foreground", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_idle_foreground),
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_idle_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_idle_foreground_default),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_tuning_visible", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_tuning_visible), # "In Tuning"
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_tuning_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_tuning_visible),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_tuning_foreground", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_tuning_foreground),
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_tuning_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_tuning_foreground_default),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_ready_visible", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_ready_visible), # "Ready for Next Tuning Block"
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_ready_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_ready_visible),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_ready_foreground", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_ready_foreground),
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_ready_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_ready_foreground_default),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_cont_visible", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_cont_visible), #"In Continous Tuning "
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_cont_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_cont_visible),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_cont_foreground", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_cont_foreground),
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_cont_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_cont_foreground_default),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_manacq_visible", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_manacq_visible), #"In Manual Acquisition"
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_manacq_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_manacq_visible),
+						InformationSet("get_bts_beam_tuning_beamtuner_status_manacq_foreground", "thriver", "mcrhci", get_bts_beam_tuning_beamtuner_status_manacq_foreground),
+						InformationSet("validate_bts_beam_tuning_beamtuner_status_manacq_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_beamtuner_status_manacq_foreground_default),
+
+						# Beam tuning block status
+						InformationSet("get_bts_beam_tuning_block_status_unknown_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_unknown_visible), # "State unknown"
+						InformationSet("validate_bts_beam_tuning_block_status_unknown_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_unknown_visible),                        
+						InformationSet("get_bts_beam_tuning_block_status_unknown_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_unknown_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_unknown_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_unknown_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_uninitialized_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_uninitialized_visible), # "Unitialized"
+						InformationSet("validate_bts_beam_tuning_block_status_uninitialized_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_uninitialized_visible),		
+        				InformationSet("get_bts_beam_tuning_block_status_uninitialized_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_uninitialized_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_uninitialized_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_uninitialized_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_idle_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_idle_visible), # "Idle"
+						InformationSet("validate_bts_beam_tuning_block_status_idle_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_idle_visible),		
+        				InformationSet("get_bts_beam_tuning_block_status_idle_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_idle_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_idle_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_idle_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_prepare_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_prepare_visible), # "Prepare measurement devide"
+						InformationSet("validate_bts_beam_tuning_block_status_prepare_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_prepare_visible),
+						InformationSet("get_bts_beam_tuning_block_status_prepare_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_prepare_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_prepare_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_prepare_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_waitacq_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_waitacq_visible), # "Wait acquisition"
+						InformationSet("validate_bts_beam_tuning_block_status_waitacq_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_waitacq_visible),						
+						InformationSet("get_bts_beam_tuning_block_status_waitacq_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_waitacq_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_waitacq_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_waitacq_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_tuningwait_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_tuningwait_visible), # "In tuning waiting"
+						InformationSet("validate_bts_beam_tuning_block_status_tuningwait_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_tuningwait_visible),
+						InformationSet("get_bts_beam_tuning_block_status_tuningwait_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_tuningwait_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_tuningwait_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_tuningwait_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_checking_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_checking_visible), # "In tuning checking"
+						InformationSet("validate_bts_beam_tuning_block_status_checking_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_checking_visible),
+						InformationSet("get_bts_beam_tuning_block_status_checking_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_checking_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_checking_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_checking_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_finishedacq_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_finishedacq_visible), # "Finished acquisition"
+						InformationSet("validate_bts_beam_tuning_block_status_finishedacq_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_finishedacq_visible),						
+                        InformationSet("get_bts_beam_tuning_block_status_finishedacq_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_finishedacq_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_finishedacq_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_finishedacq_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_cancel_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_cancel_visible), # "Canceling corrections"
+						InformationSet("validate_bts_beam_tuning_block_status_cancel_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_cancel_visible),						
+                        InformationSet("get_bts_beam_tuning_block_status_cancel_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_cancel_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_cancel_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_cancel_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_tuned_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_tuned_visible), # "Tuned"
+						InformationSet("validate_bts_beam_tuning_block_status_tuned_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_tuned_visible),					
+                    	InformationSet("get_bts_beam_tuning_block_status_tuned_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_tuned_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_tuned_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_tuned_foreground_default),
+						InformationSet("get_bts_beam_tuning_block_status_nottuned_visible", "thriver", "mcrhci", get_bts_beam_tuning_block_status_nottuned_visible), # "Not tuned"
+						InformationSet("validate_bts_beam_tuning_block_status_nottuned_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_nottuned_visible),				
+                		InformationSet("get_bts_beam_tuning_block_status_nottuned_foreground", "thriver", "mcrhci", get_bts_beam_tuning_block_status_nottuned_foreground),
+						InformationSet("validate_bts_beam_tuning_block_status_nottuned_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_status_nottuned_foreground_default),
+
+						# nbr loop
+						InformationSet("get_bts_beam_tuning_nbr_tuning_loop_visible", "thriver", "mcrhci", get_bts_beam_tuning_nbr_tuning_loop_visible),
+						InformationSet("validate_bts_beam_tuning_nbr_tuning_loop_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_tuning_loop_visible),                        
+						InformationSet("get_bts_beam_tuning_nbr_tuning_loop_value", "thriver", "mcrhci", get_bts_beam_tuning_nbr_tuning_loop_value),
+						InformationSet("validate_bts_beam_tuning_nbr_tuning_loop_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_tuning_loop_value_default),
+
+						# nbr acquisition
+						InformationSet("get_bts_beam_tuning_nbr_acquisition_visible", "thriver", "mcrhci", get_bts_beam_tuning_nbr_acquisition_visible),
+						InformationSet("validate_bts_beam_tuning_nbr_acquisition_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_acquisition_visible), 
+						InformationSet("get_bts_beam_tuning_nbr_acquisition_value", "thriver", "mcrhci", get_bts_beam_tuning_nbr_acquisition_value),
+						InformationSet("validate_bts_beam_tuning_nbr_acquisition_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_acquisition_value_default),
+
+						# centroid_x
+						InformationSet("get_bts_beam_tuning_centroid_x_visible", "thriver", "mcrhci", get_bts_beam_tuning_centroid_x_visible),
+						InformationSet("validate_bts_beam_tuning_centroid_x_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_x_visible),                        
+						InformationSet("get_bts_beam_tuning_centroid_x_value", "thriver", "mcrhci", get_bts_beam_tuning_centroid_x_value),
+						InformationSet("validate_bts_beam_tuning_centroid_x_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_x_value_default),
+
+						# sigma_x
+						InformationSet("get_bts_beam_tuning_sigma_x_visible", "thriver", "mcrhci", get_bts_beam_tuning_sigma_x_visible),
+						InformationSet("validate_bts_beam_tuning_sigma_x_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_x_visible),                        
+						InformationSet("get_bts_beam_tuning_sigma_x_value", "thriver", "mcrhci", get_bts_beam_tuning_sigma_x_value),
+						InformationSet("validate_bts_beam_tuning_sigma_x_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_x_value_default),
+
+						# centroid_y
+						InformationSet("get_bts_beam_tuning_centroid_y_visible", "thriver", "mcrhci", get_bts_beam_tuning_centroid_y_visible),
+						InformationSet("validate_bts_beam_tuning_centroid_y_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_y_visible),                        
+						InformationSet("get_bts_beam_tuning_centroid_y_value", "thriver", "mcrhci", get_bts_beam_tuning_centroid_y_value),
+						InformationSet("validate_bts_beam_tuning_centroid_y_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_y_value_default),
+
+						# sigma_y
+						InformationSet("get_bts_beam_tuning_sigma_y_visible", "thriver", "mcrhci", get_bts_beam_tuning_sigma_y_visible),
+						InformationSet("validate_bts_beam_tuning_sigma_y_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_y_visible),                        
+						InformationSet("get_bts_beam_tuning_sigma_y_value", "thriver", "mcrhci", get_bts_beam_tuning_sigma_y_value),
+						InformationSet("validate_bts_beam_tuning_sigma_y_value_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_y_value_default),
+
+						# msg_loopfailedlbl
+						InformationSet("get_bts_beam_tuning_msg_loopfailedlbl_visible", "thriver", "mcrhci", get_bts_beam_tuning_msg_loopfailedlbl_visible),
+						InformationSet("validate_bts_beam_tuning_msg_loopfailedlbl_visible_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_msg_loopfailedlbl_visible_default),
+
+						# msg_beamnottunedlbl
+						InformationSet("get_bts_beam_tuning_msg_beamnottunedlbl_visible", "thriver", "mcrhci", get_bts_beam_tuning_msg_beamnottunedlbl_visible),
+						InformationSet("validate_bts_beam_tuning_msg_beamnottunedlbl_visible_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_msg_beamnottunedlbl_visible_default),
+
+						# <Start> button
+						InformationSet("get_bts_beam_tuning_startbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_startbtn_visible),
+						InformationSet("validate_bts_beam_tuning_startbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_startbtn_visible),                        
+						InformationSet("get_bts_beam_tuning_start_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_start_led_visible),
+						InformationSet("validate_bts_beam_tuning_start_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_start_led_visible),                        
+						InformationSet("get_bts_beam_tuning_start_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_start_led_foreground),
+						InformationSet("validate_bts_beam_tuning_start_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_start_led_foreground_default),
+
+						# <Stop> button
+						InformationSet("get_bts_beam_tuning_stopbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_stopbtn_visible),
+						InformationSet("validate_bts_beam_tuning_stopbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_stopbtn_visible),
+						InformationSet("get_bts_beam_tuning_stop_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_stop_led_visible),
+						InformationSet("validate_bts_beam_tuning_stop_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_stop_led_visible),						                        
+						InformationSet("get_bts_beam_tuning_stop_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_stop_led_foreground),
+						InformationSet("validate_bts_beam_tuning_stop_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_stop_led_foreground_default),
+
+						# <Reset> button
+						InformationSet("get_bts_beam_tuning_resetbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_resetbtn_visible),
+						InformationSet("validate_bts_beam_tuning_resetbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_resetbtn_visible),
+						InformationSet("get_bts_beam_tuning_reset_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_reset_led_visible),
+						InformationSet("validate_bts_beam_tuning_reset_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_reset_led_visible),						                        
+						InformationSet("get_bts_beam_tuning_reset_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_reset_led_foreground),
+						InformationSet("validate_bts_beam_tuning_reset_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_reset_led_foreground_default),
+
+						# <Bypass> button
+						InformationSet("get_bts_beam_tuning_bypassbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_bypassbtn_visible),
+						InformationSet("validate_bts_beam_tuning_bypassbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_bypassbtn_visible),
+						InformationSet("get_bts_beam_tuning_bypass_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_bypass_led_visible),
+						InformationSet("validate_bts_beam_tuning_bypass_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_bypass_led_visible),						                        
+						InformationSet("get_bts_beam_tuning_bypass_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_bypass_led_foreground),
+						InformationSet("validate_bts_beam_tuning_bypass_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_bypass_led_foreground_default),
+
+						# <Redo> button
+						InformationSet("get_bts_beam_tuning_redobtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_redobtn_visible),
+						InformationSet("validate_bts_beam_tuning_redobtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_redobtn_visible),
+						InformationSet("get_bts_beam_tuning_redo_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_redo_led_visible),
+						InformationSet("validate_bts_beam_tuning_redo_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_redo_led_visible),						                        
+						InformationSet("get_bts_beam_tuning_redo_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_redo_led_foreground),
+						InformationSet("validate_bts_beam_tuning_redo_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_redo_led_foreground_default),
+
+						# <Manual Acq. On IC2/IC3> button
+						InformationSet("get_bts_beam_tuning_manualacquisitionbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_manualacquisitionbtn_visible),
+						InformationSet("validate_bts_beam_tuning_manualacquisitionbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_manualacquisitionbtn_visible),
+						InformationSet("get_bts_beam_tuning_manualacquisition_led_visible", "thriver", "mcrhci", get_bts_beam_tuning_manualacquisition_led_visible),
+						InformationSet("validate_bts_beam_tuning_manualacquisition_led_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_manualacquisition_led_visible),						                        
+						InformationSet("get_bts_beam_tuning_manualacquisition_led_foreground", "thriver", "mcrhci", get_bts_beam_tuning_manualacquisition_led_foreground),
+						InformationSet("validate_bts_beam_tuning_manualacquisition_led_foreground_default", "mcrhci", "hcitracer", validate_bts_beam_tuning_manualacquisition_led_foreground_default),
+
+                        # <Stop Manual Acquisition> button
+						InformationSet("get_bts_beam_tuning_stopmanualbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_stopmanualbtn_visible),
+						InformationSet("validate_bts_beam_tuning_stopmanualbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_stopmanualbtn_visible),
+
+                        # <Close> button
+						InformationSet("get_bts_beam_tuning_cancelbtn_visible", "thriver", "mcrhci", get_bts_beam_tuning_cancelbtn_visible),
+						InformationSet("validate_bts_beam_tuning_cancelbtn_visible", "mcrhci", "hcitracer", validate_bts_beam_tuning_cancelbtn_visible),                        
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup =	[  
+						]
+		self.teardown_path = []
+
+
+
+class SETUP_VALIDATE_BEAM_TUNING_BLOCK_ID(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'Tuning block Id' equal to 10"
+	bts_beam_tuning_block_id_value_expected = 10
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name
+		bts_beam_tuning_block_id_value_expected = cls.bts_beam_tuning_block_id_value_expected
+
+		# get values
+		get_bts_beam_tuning_tuning_block_id_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_tuning_block_id")
+
+		# validate
+		validate_bts_beam_tuning_block_id_value_expected = MsgTypeNumeric("bts_beam_tuning_tuning_block_id:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_block_id_value_expected)
+
+
+		info_exchange = [
+						InformationSet("get_bts_beam_tuning_tuning_block_id_value", "thriver", "mcrhci", get_bts_beam_tuning_tuning_block_id_value),
+						InformationSet("validate_bts_beam_tuning_block_id_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_block_id_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []		
+
+
+class SETUP_VALIDATE_NBR_TUNING_LOOP(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'nbr tuning loop' equal to 24"
+	bts_beam_tuning_nbr_tuning_loop_value_expected = 24
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name	
+		bts_beam_tuning_nbr_tuning_loop_value_expected = cls.bts_beam_tuning_nbr_tuning_loop_value_expected
+	  
+		# get values
+		get_bts_beam_tuning_nbr_tuning_loop_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_nbr_tuning_loop")
+
+		# validate
+		validate_bts_beam_tuning_nbr_tuning_loop_value_expected = MsgTypeNumeric("bts_beam_tuning_nbr_tuning_loop:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_nbr_tuning_loop_value_expected)
+
+		info_exchange = [			 
+						InformationSet("get_bts_beam_tuning_nbr_tuning_loop_value", "thriver", "mcrhci", get_bts_beam_tuning_nbr_tuning_loop_value),
+						InformationSet("validate_bts_beam_tuning_nbr_tuning_loop_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_tuning_loop_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []	
+
+
+
+class SETUP_VALIDATE_NBR_ACQUISITION(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'nbr acquisition' equal to 25"
+	bts_beam_tuning_nbr_acquisition_value_expected = 25
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name	
+		bts_beam_tuning_nbr_acquisition_value_expected = cls.bts_beam_tuning_nbr_acquisition_value_expected
+	  
+		# get values
+		get_bts_beam_tuning_nbr_acquisition_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_nbr_acquisition")
+
+		# validate
+		validate_bts_beam_tuning_nbr_acquisition_value_expected = MsgTypeNumeric("bts_beam_tuning_nbr_acquisition:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_nbr_acquisition_value_expected)
+
+
+		info_exchange = [			   
+						InformationSet("get_bts_beam_tuning_nbr_acquisition_value", "thriver", "mcrhci", get_bts_beam_tuning_nbr_acquisition_value),
+						InformationSet("validate_bts_beam_tuning_nbr_acquisition_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_nbr_acquisition_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []	
+
+
+class SETUP_VALIDATE_CENTROID_X(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'Centroid X or Skewness X:' equal to 20"
+	bts_beam_tuning_centroid_x_value_expected = 20
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name
+		bts_beam_tuning_centroid_x_value_expected = cls.bts_beam_tuning_centroid_x_value_expected
+	 
+		# get values
+		get_bts_beam_tuning_centroid_x_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_centroid_x")
+
+		# validate 
+		validate_bts_beam_tuning_centroid_x_value_expected = MsgTypeNumeric("bts_beam_tuning_centroid_x:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_centroid_x_value_expected)
+
+		info_exchange = [	  
+						InformationSet("get_bts_beam_tuning_centroid_x_value", "thriver", "mcrhci", get_bts_beam_tuning_centroid_x_value),
+						InformationSet("validate_bts_beam_tuning_centroid_x_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_x_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []
+
+
+class SETUP_VALIDATE_SIGMA_X(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'Sigma X or Rms X:' equal to 21"
+	bts_beam_tuning_sigma_x_value_expected = 21
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name
+		bts_beam_tuning_sigma_x_value_expected = cls.bts_beam_tuning_sigma_x_value_expected
+	  
+		# get values
+		get_bts_beam_tuning_sigma_x_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_sigma_x")
+
+		# validate
+		validate_bts_beam_tuning_sigma_x_value_expected = MsgTypeNumeric("bts_beam_tuning_sigma_x:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_sigma_x_value_expected)
+
+
+		info_exchange = [				 
+						InformationSet("get_bts_beam_tuning_sigma_x_value", "thriver", "mcrhci", get_bts_beam_tuning_sigma_x_value),
+						InformationSet("validate_bts_beam_tuning_sigma_x_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_x_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []	
+
+
+class SETUP_VALIDATE_CENTROID_Y(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'Centroid Y or Skewness Y:' equal to 22"
+	bts_beam_tuning_centroid_y_value_expected = 22	
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name
+		bts_beam_tuning_centroid_y_value_expected = cls.bts_beam_tuning_centroid_y_value_expected	
+	  
+		# get values
+		get_bts_beam_tuning_centroid_y_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_centroid_y")
+
+		# validate 
+		validate_bts_beam_tuning_centroid_y_value_expected = MsgTypeNumeric("bts_beam_tuning_centroid_y:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_centroid_y_value_expected)
+
+
+		info_exchange = [		   
+						InformationSet("get_bts_beam_tuning_centroid_y_value", "thriver", "mcrhci", get_bts_beam_tuning_centroid_y_value),
+						InformationSet("validate_bts_beam_tuning_centroid_y_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_centroid_y_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = [] 	
+
+
+class SETUP_VALIDATE_SIGMA_Y(ClinicalIntegrationTestProcedure):
+	name = "Verify text value of 'Sigma Y or Rms Y:' equal to 23"
+	bts_beam_tuning_sigma_y_value_expected = 23
+	def __init__(self, test):
+		cls = type(self)
+		name = cls.name
+		bts_beam_tuning_sigma_y_value_expected = cls.bts_beam_tuning_sigma_y_value_expected	
+	  
+		# get values
+		get_bts_beam_tuning_sigma_y_value = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_VALUE, variable_in = "bts_beam_tuning_sigma_y")
+
+		# validate
+		validate_bts_beam_tuning_sigma_y_value_expected = MsgTypeNumeric("bts_beam_tuning_sigma_y:TMMI_MCR_OBJECT_GET_VALUE", value=bts_beam_tuning_sigma_y_value_expected)
+
+		info_exchange = [				  
+						InformationSet("get_bts_beam_tuning_sigma_y_value", "thriver", "mcrhci", get_bts_beam_tuning_sigma_y_value),
+						InformationSet("validate_bts_beam_tuning_sigma_y_value_expected", "mcrhci", "hcitracer", validate_bts_beam_tuning_sigma_y_value_expected),						
+						]
+
+		ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+		self.applicable_rooms = ['mcr']
+		self.setup = []
+		self.teardown = []	

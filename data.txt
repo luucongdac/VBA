@@ -1336,87 +1336,86 @@ Test procedure
 Subdrawing file iba_check_notok.sd is displayed
 
 * Confirm in step (2)
-Subdrawing file iba_check_ok.sd is displayed.","$G$185":"SETUP_VALIDATE_OPEN_BEAM_TUNING","$H$185":"	name = 'Validate beam tuning screen'
+Subdrawing file iba_check_ok.sd is displayed.","$G$185":"SETUP_VALIDATE_OPEN_BEAM_TUNING","$H$185":"name = "Validate beam tuning screen"
+green = "13"
+grey = "65"
+yellow = "12"
+black = "0"
+visible = "1"
+notVisible = "0"
+bts_beam_tuning_block_id_value_default_expected = 0
+bts_beam_tuning_beamtuner_status_idle_foreground_default_expected = green
+bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected = grey
+bts_beam_tuning_beamtuner_status_ready_foreground_default_expected = grey
+bts_beam_tuning_beamtuner_status_cont_foreground_default_expected = grey
+bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected = grey
+bts_beam_tuning_block_status_unknown_foreground_default_expected = green
+bts_beam_tuning_block_status_uninitialized_foreground_default_expected = grey
+bts_beam_tuning_block_status_idle_foreground_default_expected = grey
+bts_beam_tuning_block_status_prepare_foreground_default_expected = grey
+bts_beam_tuning_block_status_waitacq_foreground_default_expected = grey
+bts_beam_tuning_block_status_tuningwait_foreground_default_expected = grey
+bts_beam_tuning_block_status_checking_foreground_default_expected = grey
+bts_beam_tuning_block_status_finishedacq_foreground_default_expected = grey
+bts_beam_tuning_block_status_cancel_foreground_default_expected = grey
+bts_beam_tuning_block_status_tuned_foreground_default_expected = grey
+bts_beam_tuning_block_status_nottuned_foreground_default_expected = grey
+bts_beam_tuning_nbr_tuning_loop_value_default_expected = 0
+bts_beam_tuning_nbr_acquisition_value_default_expected = 0
+bts_beam_tuning_centroid_x_value_default_expected = 0
+bts_beam_tuning_sigma_x_value_default_expected = 0
+bts_beam_tuning_centroid_y_value_default_expected = 0
+bts_beam_tuning_sigma_y_value_default_expected = 0
+bts_beam_tuning_msg_loopfailedlbl_visible_default_expected = notVisible
+bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected = notVisible
+bts_beam_tuning_start_led_foreground_default_expected = yellow
+bts_beam_tuning_stop_led_foreground_default_expected = black
+bts_beam_tuning_reset_led_foreground_default_expected = yellow
+bts_beam_tuning_bypass_led_foreground_default_expected = black
+bts_beam_tuning_redo_led_foreground_default_expected = black
+bts_beam_tuning_manualacquisition_led_foreground_default_expected = black
+bts_beam_tuning_tuning_block_id_visible_expected = visible
+bts_beam_tuning_beamtuner_status_idle_visible_expected = visible
+bts_beam_tuning_beamtuner_status_tuning_visible_expected = visible
+bts_beam_tuning_beamtuner_status_ready_visible_expected = visible
+bts_beam_tuning_beamtuner_status_cont_visible_expected = visible
+bts_beam_tuning_beamtuner_status_manacq_visible_expected = visible
+bts_beam_tuning_centroid_x_visible_expected = visible
+bts_beam_tuning_sigma_x_visible_expected = visible
+bts_beam_tuning_centroid_y_visible_expected = visible
+bts_beam_tuning_sigma_y_visible_expected = visible
+bts_beam_tuning_nbr_tuning_loop_visible_expected = visible
+bts_beam_tuning_nbr_acquisition_visible_expected = visible
+bts_beam_tuning_block_status_unknown_visible_expected = visible
+bts_beam_tuning_block_status_uninitialized_visible_expected = visible
+bts_beam_tuning_block_status_idle_visible_expected = visible
+bts_beam_tuning_block_status_prepare_visible_expected = visible
+bts_beam_tuning_block_status_waitacq_visible_expected = visible
+bts_beam_tuning_block_status_tuningwait_visible_expected = visible
+bts_beam_tuning_block_status_checking_visible_expected = visible
+bts_beam_tuning_block_status_finishedacq_visible_expected = visible
+bts_beam_tuning_block_status_cancel_visible_expected = visible
+bts_beam_tuning_block_status_tuned_visible_expected = visible
+bts_beam_tuning_block_status_nottuned_visible_expected = visible
+bts_beam_tuning_bypass_led_visible_expected = visible
+bts_beam_tuning_redo_led_visible_expected = visible
+bts_beam_tuning_start_led_visible_expected = visible
+bts_beam_tuning_reset_led_visible_expected = visible
+bts_beam_tuning_stop_led_visible_expected = visible
+bts_beam_tuning_manualacquisition_led_visible_expected = visible
+bts_beam_tuning_bypassbtn_visible_expected = visible
+bts_beam_tuning_redobtn_visible_expected = visible
+bts_beam_tuning_startbtn_visible_expected = visible
+bts_beam_tuning_resetbtn_visible_expected = visible
+bts_beam_tuning_stopbtn_visible_expected = visible
+bts_beam_tuning_manualacquisitionbtn_visible_expected = visible
+bts_beam_tuning_stopmanualbtn_visible_expected = visible
+bts_beam_tuning_cancelbtn_visible_expected = visible
+","$I$185":"setup_mcrhci_beam_tuning.py","$J$185":"		name = 'Validate beam tuning screen'
 	
 	green = "13"
 	grey = "65"
-	yellow = "12"
-	black = "0"
-	visible = "1"
-	notVisible = "0"
-	
-	bts_beam_tuning_block_id_value_default_expected = 0
-	bts_beam_tuning_beamtuner_status_idle_foreground_default_expected = green
-	bts_beam_tuning_beamtuner_status_tuning_foreground_default_expected = grey
-	bts_beam_tuning_beamtuner_status_ready_foreground_default_expected = grey
-	bts_beam_tuning_beamtuner_status_cont_foreground_default_expected = grey
-	bts_beam_tuning_beamtuner_status_manacq_foreground_default_expected = grey
-	bts_beam_tuning_block_status_unknown_foreground_default_expected = green
-	bts_beam_tuning_block_status_uninitialized_foreground_default_expected = grey
-	bts_beam_tuning_block_status_idle_foreground_default_expected = grey
-	bts_beam_tuning_block_status_prepare_foreground_default_expected = grey
-	bts_beam_tuning_block_status_waitacq_foreground_default_expected = grey
-	bts_beam_tuning_block_status_tuningwait_foreground_default_expected = grey
-	bts_beam_tuning_block_status_checking_foreground_default_expected = grey
-	bts_beam_tuning_block_status_finishedacq_foreground_default_expected = grey
-	bts_beam_tuning_block_status_cancel_foreground_default_expected = grey
-	bts_beam_tuning_block_status_tuned_foreground_default_expected = grey
-	bts_beam_tuning_block_status_nottuned_foreground_default_expected = grey
-	bts_beam_tuning_nbr_tuning_loop_value_default_expected = 0
-	bts_beam_tuning_nbr_acquisition_value_default_expected = 0
-	bts_beam_tuning_centroid_x_value_default_expected = 0
-	bts_beam_tuning_sigma_x_value_default_expected = 0
-	bts_beam_tuning_centroid_y_value_default_expected = 0
-	bts_beam_tuning_sigma_y_value_default_expected = 0
-	bts_beam_tuning_msg_loopfailedlbl_visible_default_expected = notVisible
-	bts_beam_tuning_msg_beamnottunedlbl_visible_default_expected = notVisible
-	bts_beam_tuning_start_led_foreground_default_expected = yellow
-	bts_beam_tuning_stop_led_foreground_default_expected = black
-	bts_beam_tuning_reset_led_foreground_default_expected = yellow
-	bts_beam_tuning_bypass_led_foreground_default_expected = black
-	bts_beam_tuning_redo_led_foreground_default_expected = black
-	bts_beam_tuning_manualacquisition_led_foreground_default_expected = black
-	
-	bts_beam_tuning_tuning_block_id_visible_expected = visible
-	bts_beam_tuning_beamtuner_status_idle_visible_expected = visible
-	bts_beam_tuning_beamtuner_status_tuning_visible_expected = visible
-	bts_beam_tuning_beamtuner_status_ready_visible_expected = visible
-	bts_beam_tuning_beamtuner_status_cont_visible_expected = visible
-	bts_beam_tuning_beamtuner_status_manacq_visible_expected = visible
-	bts_beam_tuning_centroid_x_visible_expected = visible
-	bts_beam_tuning_sigma_x_visible_expected = visible
-	bts_beam_tuning_centroid_y_visible_expected = visible
-	bts_beam_tuning_sigma_y_visible_expected = visible
-	bts_beam_tuning_nbr_tuning_loop_visible_expected = visible
-	bts_beam_tuning_nbr_acquisition_visible_expected = visible
-	bts_beam_tuning_block_status_unknown_visible_expected = visible
-	bts_beam_tuning_block_status_uninitialized_visible_expected = visible
-	bts_beam_tuning_block_status_idle_visible_expected = visible
-	bts_beam_tuning_block_status_prepare_visible_expected = visible
-	bts_beam_tuning_block_status_waitacq_visible_expected = visible
-	bts_beam_tuning_block_status_tuningwait_visible_expected = visible
-	bts_beam_tuning_block_status_checking_visible_expected = visible
-	bts_beam_tuning_block_status_finishedacq_visible_expected = visible
-	bts_beam_tuning_block_status_cancel_visible_expected = visible
-	bts_beam_tuning_block_status_tuned_visible_expected = visible
-	bts_beam_tuning_block_status_nottuned_visible_expected = visible
-	bts_beam_tuning_bypass_led_visible_expected = visible
-	bts_beam_tuning_redo_led_visible_expected = visible
-	bts_beam_tuning_start_led_visible_expected = visible
-	bts_beam_tuning_reset_led_visible_expected = visible
-	bts_beam_tuning_stop_led_visible_expected = visible
-	bts_beam_tuning_manualacquisition_led_visible_expected = visible
-	bts_beam_tuning_bypassbtn_visible_expected = visible
-	bts_beam_tuning_redobtn_visible_expected = visible
-	bts_beam_tuning_startbtn_visible_expected = visible
-	bts_beam_tuning_resetbtn_visible_expected = visible
-	bts_beam_tuning_stopbtn_visible_expected = visible
-	bts_beam_tuning_manualacquisitionbtn_visible_expected = visible
-	bts_beam_tuning_stopmanualbtn_visible_expected = visible
-	bts_beam_tuning_cancelbtn_visible_expected = visible
-	
-	
-","$I$185":"setup_mcrhci_beam_tuning.py","$J$185":"","$K$185":"","$L$185":"Open","$M$185":""},
+	yellow = "12"","$K$185":"","$L$185":"Open","$M$185":""},
 {"$A$186":"M_S_BTS_83","$B$186":"Valudate Q27 Setpoint Status checkmark","$C$186":"","$D$186":"","$E$186":"Pre-condition
 BTS Magnets Control screen is displayed
 
@@ -1426,7 +1425,9 @@ Test procedure
 Subdrawing file iba_check_notok.sd is displayed
 
 * Confirm in step (2)
-Subdrawing file iba_check_ok.sd is displayed.","$G$186":"","$H$186":"","$I$186":"","$J$186":"","$K$186":"","$L$186":"Open","$M$186":""},
+Subdrawing file iba_check_ok.sd is displayed.","$G$186":"SETUP_VALIDATE_CENTROID_Y","$H$186":"name = "Verify text value of 'Centroid Y or Skewness Y:' equal to 22"
+bts_beam_tuning_centroid_y_value_expected = 22
+","$I$186":"setup_mcrhci_beam_tuning.py","$J$186":"","$K$186":"","$L$186":"Open","$M$186":""},
 {"$A$187":"M_S_BTS_84","$B$187":"Validate Setpoint (Digits) Q27","$C$187":"digits feedback text and frame","$D$187":"","$E$187":"Pre-condition
 BTS Magnets Control screen is displayed
 
