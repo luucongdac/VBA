@@ -2,6 +2,7 @@ root_pwd = r'D:\02_Git\VBA'
 
 root_pwd = r'D:\02_Git\VBA'
 
+
 import re
 import os
 import shutil
@@ -121,6 +122,8 @@ def validate_text(text, is_leading_degit=False):
     text = text.replace(' ', '').replace(r'\t', '').replace('	',"")
     if not is_leading_degit and text and text[0].isdigit():
         text = text[1:]
+    if text.endswith('_'):
+        text = text[:-1]      
     return text
 
 testSuiteName = ''
@@ -244,7 +247,7 @@ for i in testCases:
         print(f"G: {g}")
     for h in H:    
         print(f"H: {h}")                
-    content = testCaseTemplate.replace("TestCaseName", f"{testCaseName}".replace("'",'"'))
+    content = testCaseTemplate
     content = content.replace("TestCaseDescription", f'name = "{testCaseNameDescription}"')
     ClassImport = ""
     for i in file_import:
@@ -276,9 +279,15 @@ for i in testCases:
     
     a_file_path = os.path.join(sub_folder_path, f"{testCaseName}.py")
     # Check if file exists
-    if os.path.exists(a_file_path):
-        # Append prefix "_1" to the file name
-        a_file_path = a_file_path.replace(".py", "_1.py")
+    while os.path.exists(a_file_path):
+        a = re.search("_v(\d+)\.py$", a_file_path)
+        if(not a):
+            a_file_path = a_file_path.replace(".py", "_v1.py")
+        else:
+            # print(a.group(1))
+            a_file_path = a_file_path.replace(f"_v{a.group(1)}.py", f"_v{int(a.group(1))+1}.py")
+    # print(f"======[a_file_path]=========> {a_file_path}")
+    content = content.replace("TestCaseName", f"{a_file_path}".replace("'",'"').replace(".py","").split("\\")[-1])
     # Create the file
     with open(a_file_path, "w", newline="\n") as f:
         test_case_file_created.append(a_file_path.replace(".py","").split("\\")[-1])    
@@ -322,3 +331,5 @@ with open(os.path.join(sub_folder_path, "__init__.py"), "w", newline='\n') as f:
 #forever loop
 while(True):
     None
+#Not change
+#Not change
