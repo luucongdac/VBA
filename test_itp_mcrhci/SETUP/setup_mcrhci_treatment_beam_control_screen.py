@@ -619,7 +619,7 @@ class SETUP_CLICK_BEAM_CONTROL(ClinicalIntegrationTestProcedure):
     def __init__(self, test):
         name = "Click on Beam control"
         # Point to Treatment Beam Control screen location
-        msg_location_Treatment_Beam_Control_View = MsgHciButtonPositionEvent(9, [[100, 520]])
+        msg_location_Treatment_Beam_Control_View = MsgHciButtonPositionEvent(9, [[ 99, 698 ]])
         #Declare list of Informationset using above tcsobject
         info_exchange = [                      
                         InformationSet("Load screen Treatment_Beam_Control", "thriver", "mcrhci", msg_location_Treatment_Beam_Control_View),

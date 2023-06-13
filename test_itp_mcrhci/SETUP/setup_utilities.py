@@ -1,6 +1,6 @@
 """
 File:
-========================
+======================================
 
 This module implements set up path for mcrhci test
 
@@ -249,6 +249,131 @@ class SETUP_VALIDATE_OBJECT_INFO(ClinicalIntegrationTestProcedure):
         else:
             name = "Invalid data type"
             validate_object = MsgTypeString(object_name + ":" + info_type, value=expected_value)
+
+        info_exchange = [
+                        InformationSet(get_info_name, "thriver", "mcrhci", get_object),
+                        InformationSet(validate_info_name, "mcrhci", "hcitracer", validate_object)
+                        ]
+
+        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+        self.applicable_rooms = ['mcr']
+        self.setup = []
+        self.teardown = []
+
+class SETUP_VALIDATE_SUBDRAWING_OBJECT_TEXT(ClinicalIntegrationTestProcedure):
+    """
+    This class is used to validate the displaying text of a subdrawing object.
+    Variables:
+        name:                   optional  - if a different format name is needed, this field should be overwritten
+        view_name:              mandatory - name of the view to be checked (e.g.: view_name = "pts_layout")
+        subdrawing_object_name: mandatory - name of the subdrawing object
+        expected_value:         mandatory - the expected text
+    """
+    name = ""
+    view_name = ""
+    subdrawing_object_name = ""
+    expected_value = ""
+    def __init__(self, test):
+        cls = type(self)
+        view_name = cls.view_name
+        subdrawing_object_name = cls.subdrawing_object_name
+        expected_value = cls.expected_value
+        info_type = "TMMI_MCR_SUBDRAWING_OBJECT_GET_TEXT"
+
+        get_object = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_SUBDRAWING_OBJECT_GET_TEXT, variable_in = "{view_name}:{subdrawing_object_name}".\
+                    format(view_name=view_name, subdrawing_object_name=subdrawing_object_name))
+        get_info_name = "Get {view_name}:{subdrawing_object_name}:{info_type}".\
+                        format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, info_type=info_type)
+        validate_info_name = "Validate that the value of {view_name}:{subdrawing_object_name}:{info_type} is equal to {expected_value}".\
+                                format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, info_type=info_type, expected_value=expected_value)
+
+        if cls.name != "":
+            name = cls.name
+        else:
+            name = validate_info_name
+
+        # validate
+        validate_object = MsgTypeString("{view_name}:{subdrawing_object_name}:{info_type}".\
+                                        format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, info_type=info_type), value=expected_value)
+
+        info_exchange = [
+                        InformationSet(get_info_name, "thriver", "mcrhci", get_object),
+                        InformationSet(validate_info_name, "mcrhci", "hcitracer", validate_object)
+                        ]
+
+        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+        self.applicable_rooms = ['mcr']
+        self.setup = []
+        self.teardown = []
+
+class SETUP_VALIDATE_SUBDRAWING_SUBOBJECT_INFO(ClinicalIntegrationTestProcedure):
+    """
+    This class is used to validate the information of the subobject contained by a subdrawing object.
+    Variables:
+        name:                   optional - if a different format name is needed, this field should be overwritten
+        view_name:              mandatory - the name of the view to be checked (e.g.: view_name = "pts_layout")
+        subdrawing_object_name: mandatory - name of the subdrawing object
+        subobject_name:         mandatory - name of the subobject contained by the subdrawing object
+        info_type:              mandatory - type of information which needs to be validate
+        expected_value:         mandatory - the expected result, it can be a numeric or string value
+    """
+    name = ""
+    view_name = ""
+    subdrawing_object_name = ""
+    subobject_name = ""
+    info_type = ""
+    expected_value = ""
+    def __init__(self, test):
+        cls = type(self)
+        view_name = cls.view_name
+        subdrawing_object_name = cls.subdrawing_object_name
+        subobject_name = cls.subobject_name
+        info_type = cls.info_type
+        expected_value = cls.expected_value
+        unknown_type = "INVALID_TYPE"
+
+        # Create object, validate info
+        def getAttrObject(type_in):
+            return {
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR:BACKGROUND_COLOR" : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR,
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR:FOREGROUND_COLOR" : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR,
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR:FILL_AMOUNT"      : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR,
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR:FILL_DIRECTION"   : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_ATTR,
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_VISIBILITY"            : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_VISIBILITY,
+                "TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_TEXT"                  : TMMI_MCR_SUBDRAWING_SUBOBJECT_GET_TEXT       
+            }.get(type_in, unknown_type)
+
+        mcr_type = getAttrObject(info_type)
+        if mcr_type != unknown_type:
+            get_object = MsgMCRHciDumpGuiData(type_in = mcr_type, variable_in = "{view_name}:{subdrawing_object_name}#{subobject_name}".\
+                        format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name=subobject_name))
+            get_info_name = "Get {view_name}:{subdrawing_object_name}:{subobject_name}:{info_type}".\
+                            format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name=subobject_name, info_type=info_type)
+            validate_info_name = "Validate that the value of {view_name}:{subdrawing_object_name}:{subobject_name}:{info_type} is equal to {expected_value}".\
+                                    format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name= subobject_name, info_type=info_type, expected_value=expected_value)
+        else:
+            get_info_name = "Get invalid type"
+            validate_info_name = "Validate invalid type"
+
+        if cls.name != "":
+            name = cls.name
+        else:
+            name = validate_info_name
+
+        # validate
+        if isinstance(expected_value, bool):
+            validate_object = MsgTypeBoolean("{view_name}:{subdrawing_object_name}:{subobject_name}:{info_type}".\
+                                             format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name= subobject_name, info_type=info_type), value=expected_value)
+        elif isinstance(expected_value, (float, int)):
+            validate_object = MsgTypeNumeric("{view_name}:{subdrawing_object_name}:{subobject_name}:{info_type}".\
+                                             format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name= subobject_name, info_type=info_type), value=expected_value)
+        elif isinstance(expected_value, str):
+            validate_object = MsgTypeString("{view_name}:{subdrawing_object_name}:{subobject_name}:{info_type}".\
+                                             format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name= subobject_name, info_type=info_type), value=expected_value)
+        else:
+            name = "Invalid data type"
+            validate_object = MsgTypeString("{view_name}:{subdrawing_object_name}:{subobject_name}:{info_type}".\
+                                             format(view_name=view_name, subdrawing_object_name=subdrawing_object_name, subobject_name= subobject_name, info_type=info_type), value=expected_value)
 
         info_exchange = [
                         InformationSet(get_info_name, "thriver", "mcrhci", get_object),
@@ -750,4 +875,110 @@ class SETUP_VALIDATE_RPC_CALL_FUNCTION(ClinicalIntegrationTestProcedure):
         self.setup = []
         self.teardown = [] 
 
+class SETUP_VALIDATE_GRAPH_INFO(ClinicalIntegrationTestProcedure):
+    """
+    This class is used to get the Graph's information.
+    Variables:
+        name:                   #Overwrite: optional - if a different format name is needed, this field should be overwritten
+        view_name:              the name of the base view (e.g.: view_name = "mcr_treatment_pps_loadcell_graph1")
+        object_name:            the name of the Graph object to be checked
+        variable_name:          the variable name was binded on to Graph
+        info_type:              TMMI message type, i.e TMMI_MCR_GRAPH_GET_VAR_VALID/ TMMI_MCR_GRAPH_GET_VAR_VALUE/ TMMI_MCR_GRAPH_GET_VAR_COLOR
+        expected_value:         the expected value of the graph including Boolean, Float type
+    """
+    name           = ""
+    view_name      = ""
+    object_name    = ""
+    variable_name  = ""
+    info_type      = ""
+    expected_value = 0
+    def __init__(self, test):
+        cls = type(self)
+        name           = cls.name
+        view_name      = cls.view_name
+        object_name    = cls.object_name
+        variable_name  = cls.variable_name
+        info_type      = cls.info_type
+        expected_value = cls.expected_value
+        unknown_type   = "INVALID_TYPE"
 
+        # Create object, validate info
+        def getAttrObject(type_in):
+            return {
+                "TMMI_MCR_GRAPH_GET_VAR_VALID"  : [ TMMI_MCR_GRAPH_GET_VAR_VALID  , "validity"      ],
+                "TMMI_MCR_GRAPH_GET_VAR_VALUE"  : [ TMMI_MCR_GRAPH_GET_VAR_VALUE  , "value"         ],
+                "TMMI_MCR_GRAPH_GET_VAR_COLOR"  : [ TMMI_MCR_GRAPH_GET_VAR_COLOR  , "color index"   ]
+            }.get(type_in, [unknown_type, unknown_type])
+
+        mcr_type, mcr_graph_info = getAttrObject(info_type)
+        if mcr_type != unknown_type:
+            variable_in        = "{view_name}:{object_name}#{variable_name}".format(view_name=view_name, object_name=object_name, variable_name=variable_name)
+            get_object         = MsgMCRHciDumpGuiData(type_in = mcr_type, variable_in = variable_in)
+            get_info_name      = "Get {object_name}'s {variable_name} {mcr_graph_info}".format(object_name=object_name, variable_name=variable_name, mcr_graph_info=mcr_graph_info)
+            validate_info_name = "Validate that the {mcr_graph_info} of the variable {variable_name} in the graph {object_name} is {expected_value}".format(mcr_graph_info=mcr_graph_info, variable_name=variable_name, object_name=object_name, expected_value=expected_value)
+        else:
+            get_info_name      = "Get invalid type"
+            validate_info_name = "Validate invalid type"
+
+        if cls.name != "":
+            name = cls.name
+        else:
+            name = validate_info_name
+        
+        # validate
+        if isinstance(expected_value, bool):
+            validate_object = MsgTypeBoolean("{view_name}:{object_name}#{variable_name}:{info_type}".format(view_name=view_name,object_name=object_name, variable_name=variable_name, info_type=info_type), value=expected_value)
+        elif isinstance(expected_value, (float, int)):
+            validate_object = MsgTypeNumeric("{view_name}:{object_name}#{variable_name}:{info_type}".format(view_name=view_name,object_name=object_name, variable_name=variable_name, info_type=info_type), value=expected_value)
+        elif isinstance(expected_value, str):
+            validate_object = MsgTypeString("{view_name}:{object_name}#{variable_name}:{info_type}".format(view_name=view_name,object_name=object_name, variable_name=variable_name, info_type=info_type), value=expected_value)
+        else:
+            name = "Invalid data type"
+            validate_object = MsgTypeString("{view_name}:{object_name}#{variable_name}:{info_type}".format(view_name=view_name,object_name=object_name, variable_name=variable_name, info_type=info_type), value=expected_value)
+
+        info_exchange = [
+                        InformationSet(get_info_name, "thriver", "mcrhci", get_object),
+                        InformationSet(validate_info_name, "mcrhci", "hcitracer", validate_object)
+                        ]
+            
+        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+        self.applicable_rooms = ['mcr']
+        self.setup = []
+        self.teardown = []
+
+class SETUP_VALIDATE_VALUE_OF_OBJECT_STRING_ATTRIBUTE(ClinicalIntegrationTestProcedure):
+    """
+    This class is used to get the Object's string attribute in the specific view.
+    Variables:
+        name:                   optional  - if a different format name is needed, this field should be overwritten
+        view_name:              mandatory - the name of the view including the object (e.g.: view_name = "pts_layout")
+        object_name:            mandatory - the name of the object to be checked (e.g.: object_name = "rectangle_1")
+        expected_string_value:  mandatory - the expected string value (e.g: "111.11", "1234", "HelloWorld")
+    """
+    name = ""
+    view_name = ""
+    object_name = ""
+    expected_string_value = ""
+
+    def __init__(self, test):
+        cls = type(self)
+        name = cls.name
+        view_name = cls.view_name
+        object_name = cls.object_name
+        expected_string_value = cls.expected_string_value
+        if cls.name != "":
+            name = cls.name
+        else:
+            name = "Validate object's string attribute with view: {view_name}:{object_name} = {expected_string_value}".format(view_name=view_name, object_name=object_name, expected_string_value=expected_string_value)
+        
+        get_object_string_attr = MsgMCRHciDumpGuiData(type_in = TMMI_MCR_OBJECT_GET_TEXT_ATTR, variable_in = "{view_name}:{object_name}".format(view_name=view_name, object_name=object_name))
+        validate_object_string_attr = MsgTypeString("{view_name}:{object_name}:TMMI_MCR_OBJECT_GET_TEXT_ATTR".format(view_name=view_name, object_name=object_name), expected_string_value)
+        info_exchange = [ 
+                        InformationSet("Get object's string attribute with view: {view_name}:{object_name}".format(view_name=view_name, object_name=object_name), "thriver", "mcrhci", get_object_string_attr),
+                        InformationSet("Validate object's string attribute with view: {view_name}:{object_name}".format(view_name=view_name, object_name=object_name), "mcrhci", "hcitracer", validate_object_string_attr),
+                        ]
+            
+        ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
+        self.applicable_rooms = ['mcr']
+        self.setup = []
+        self.teardown = [] 

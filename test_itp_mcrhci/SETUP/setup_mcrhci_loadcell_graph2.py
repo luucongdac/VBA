@@ -125,11 +125,14 @@ class SETUP_UNCHECK_ALL_CHECKBOX_WHEN_INIT_LOADCELL_GRAPH_2(ClinicalIntegrationT
         sms_5 = MsgHciButtonNameEvent(0,[["mcr_treatment_pps_loadcell_graph2:pcu_room2_lc_menuvar6"]])
 
         info_exchange = [ 
+                        InformationSet("Click on Loadcell Force Z checkbox", "thriver", "mcrhci", sms_2),
+                        InformationSet("Click on Loadcell Force Z checkbox", "thriver", "mcrhci", sms_2),
+                        InformationSet("Click on Loadcell Force X checkbox", "thriver", "mcrhci", sms_1),
                         InformationSet("Click on Loadcell Force X checkbox", "thriver", "mcrhci", sms_1),
                         InformationSet("Click on Loadcell Force Z checkbox", "thriver", "mcrhci", sms_2),
                         InformationSet("Click on Loadcell Torque X checkbox", "thriver", "mcrhci", sms_3),
-                        InformationSet("Click on Loadcell Torque X checkbox", "thriver", "mcrhci", sms_4),
-                        InformationSet("Click on Loadcell Torque X checkbox", "thriver", "mcrhci", sms_5),
+                        InformationSet("Click on Loadcell Torque Y checkbox", "thriver", "mcrhci", sms_4),
+                        InformationSet("Click on Loadcell Torque Z checkbox", "thriver", "mcrhci", sms_5),
                         ]
         ClinicalIntegrationTestProcedure.__init__(self, test, name=name, info_exchange=info_exchange)
         self.applicable_rooms = ['mcr']

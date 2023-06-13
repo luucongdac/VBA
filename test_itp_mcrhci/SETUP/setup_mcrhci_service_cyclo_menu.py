@@ -47,7 +47,7 @@ class SETUP_NAVIGATE_TO_PTS_LAYOUT_SCREEN_FROM_SERVICE_CYCLO_MENU(ClinicalIntegr
         cls = type(self)
         name = cls.name
 
-        sms_1 = MsgHciButtonPositionEvent(9, [[100, 160]])    
+        sms_1 = MsgHciButtonPositionEvent(9, [[ 99, 215 ]])    
 
         info_exchange = [
                         InformationSet("Click to Plainview button on the menu", "thriver", "mcrhci", sms_1),

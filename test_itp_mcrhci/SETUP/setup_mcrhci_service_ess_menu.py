@@ -47,7 +47,7 @@ class SETUP_NAVIGATE_TO_PTS_LAYOUT_SCREEN_FROM_SERVICE_ESS_MENU(ClinicalIntegrat
         cls = type(self)
         name = cls.name
 
-        sms_1 = MsgHciButtonPositionEvent(9, [[100, 160]])    
+        sms_1 = MsgHciButtonPositionEvent(9, [[ 99, 215 ]])    
 
         info_exchange = [
                         InformationSet("Click to Plainview button on the menu", "thriver", "mcrhci", sms_1),
@@ -64,7 +64,7 @@ class SETUP_CLICK_TO_GAUSSIAN_PIT_BUTTON_ON_SERVICE_ESS_MENU(ClinicalIntegration
         cls = type(self)
         name = cls.name
 
-        sms_1 = MsgHciButtonPositionEvent(9, [[100, 650]])    
+        sms_1 = MsgHciButtonPositionEvent(9, [[ 99, 873 ]])    
 
         info_exchange = [
                         InformationSet("Click to Gaussian Pit on Ess Menu", "thriver", "mcrhci", sms_1),
@@ -81,7 +81,7 @@ class SETUP_OPEN_BEAM_TUNING_SCREEN(ClinicalIntegrationTestProcedure):
         cls = type(self)
         name = cls.name                
         # Point to Beam tuning screen location
-        msg_location_BeamTuningView = MsgHciButtonPositionEvent(9, [[100, 670]])
+        msg_location_BeamTuningView = MsgHciButtonPositionEvent(9, [[ 99, 900 ]])
         
         info_exchange = [                      
                         InformationSet("Load screen 'beam_tuning.v", "thriver", "mcrhci", msg_location_BeamTuningView),

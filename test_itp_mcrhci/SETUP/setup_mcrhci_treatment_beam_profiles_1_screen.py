@@ -2627,7 +2627,7 @@ class SETUP_CLICK_BEAM_PROFILES_1(ClinicalIntegrationTestProcedure):
 	def __init__(self, test):
 		name = "Click on Beam Profiles 1"
 		# Point to Treatment Beam Profiles 1 screen location
-		msg_location_Treatment_Beam_Profiles_l_View = MsgHciButtonPositionEvent(9, [[130, 735]])
+		msg_location_Treatment_Beam_Profiles_l_View = MsgHciButtonPositionEvent(9, [[ 128, 987 ]])
 		#Declare list of Informationset using above tcsobject
 		info_exchange = [                      
 						InformationSet("Load screen Treatment_Beam_Profiles_1", "thriver", "mcrhci", msg_location_Treatment_Beam_Profiles_l_View),
